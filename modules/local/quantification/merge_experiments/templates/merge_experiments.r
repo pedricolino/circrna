@@ -49,6 +49,9 @@ colData(se)\$names <- NULL
 annotation <- annotation[match(rownames(se), annotation\$transcript_id),]
 rowData(se) <- annotation
 
+# Fix gene names where previously '-' was replaced with '.'
+colnames(tpm) <- gsub('\\.', '-', x=colnames(tpm))
+
 # Add TPM
 assay(se, "tpm", withDimnames = FALSE) <- tpm[rownames(se), rownames(colData(se))]
 
